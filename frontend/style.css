@@ -1,0 +1,117 @@
+
+   .sign-up{
+   
+     background-color: #9788;
+     width: 300px;
+     border-radius: 10px;
+     padding: 20px;
+     margin: 8% auto 0;
+     text-align: center;
+     border:1px black solid;
+   }
+   .sign-up h1{
+     border-radius: 20px;
+     background-color: yellow;
+     color: blue;
+     border: 1px black solid;
+     padding-bottom: 10px;
+     font-size: 5vw;
+   }
+   .sign-up button{
+    color: white;
+    background-color: rgb(141, 41, 8);
+    border: 1px black solid;
+    border-radius: 20px;
+    margin-top: 25px;
+    padding: 2% 33% 2% 33%;
+    font-size: 2vw;
+  }
+
+   .text-name{
+     border-radius: 20px;
+     padding: 1% 10% 1% 10%;
+     margin-top: 10px;
+     margin-bottom: 10px;
+   }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid wheat;
+  text-align: left;
+  padding: 8px;
+  color: white;
+  font-size: 2vw;
+}
+input[type=text], select, textarea,button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #251f1f;
+  border-radius: 4px;
+  resize: vertical;
+}
+tr:nth-child(even) {
+  background-color: #0009;
+  color: white;
+  font-size: 2vw;
+}
+.exp{
+    background-color: #9788;
+        width: 900px;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 8% auto 0;
+        text-align: center;
+        border:1px black solid;
+}
+.page{
+    background-color: #9788;
+        width: 900px;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 1% auto 0;
+        text-align: center;
+        border:1px black solid;  
+        text-align: center;
+}
+h1{
+    text-align: center;
+    color: white;
+    background-color:#0009;
+    margin: 3% 5% 2% 5%;
+    padding: 1% 10% 1% 10%; 
+    font-size: 3vw;
+    
+}
+#page{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    border: none;
+}
+@media only screen and (max-width: 620px) {
+  /* For mobile phones: */
+  .exp, input, td,th,#category,#gate,button,tr:nth-child(even) {
+    width: 100%;
+  }
+}
+
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+
+
+
+

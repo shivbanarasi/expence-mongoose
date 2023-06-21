@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+   <link rel="stylesheet" href="style.css">
+    <title>signup</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/frontend/index.html">your expence</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/frontend/index.js">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/frontend/login.html">sign up/login</a>
+          </li>
+        
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+    
+
+      <div class="sign-up">
+        <h1>Sign Up</h1>
+        <p class="massage" style="color: red;"></p>
+        <form onsubmit="massage(event)"  >
+            <input type="text" class="text-name" name="name" id="name" placeholder="name..." required>
+            
+            <input type="text" class="text-name" name="email" id="email" placeholder="email id..." required>
+            
+            
+            <input type="text" class="text-name" name="phone" id="phone" placeholder="phone no..." required>
+
+            <input type="text" name="password" id="password" class="text-name" placeholder="password..." required>
+
+          
+             
+            <button >sign up</button>
+        </form>
+        <p>if accout already created? <a href="/frontend/login.html">login</a></p>
+      </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+async function massage(e){
+  e.preventDefault();
+  const data={
+    name:e.target.name.value,
+    email:e.target.email.value,
+    phone:e.target.phone.value,
+    password:e.target.password.value,
+  }
+  console.log(data)
+  axios.post("http://localhost:3000/frontend/signup.html",data)
+  .then((res)=>{
+    console.log(res);
+    if(res.status===201){
+      window.location.href="http://localhost:3000/frontend/login.html"
+    }else{
+      const massage=document.getElementById('massage')
+      massage.innerHTML='network err'
+    }
+  })
+  .catch(err=>console.log(err));
+}
+  </script>
+
+
+</html>

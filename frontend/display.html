@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>display expence</title>
+   
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/frontend/index.html">your expence</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/frontend/index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/frontend/login.html">sign up/login</a>
+              </li>
+            
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+     <button id="premium">buy premium membership</button>
+
+     <div class="exp">
+      <h1>add your expence here</h1>
+      <form onsubmit="addexp(event)">
+          <input type="text" name="amount" placeholder="amount in Rs ....">
+  
+          <input type="text" name="discription" placeholder="discription of expence...">
+  
+          <select title="category" name="category" >
+              <option >---select expence category---</option>
+              <option value="fuel">fuel</option>
+              <option value="food">food</option>
+              <option value="salary">salary</option>
+              <option value="grocery">grocery</option>
+              <option value="cloth">cloths</option>
+          </select>
+  
+          <input type="hidden" name="email" value="" id="email" >
+  
+          <button>add expence</button>
+      </form>
+  </div>
+
+
+<div class="exp">
+    <h2 style="text-align: center; background-color: #0009; color: white; border: black solid ; padding: 5px;"> your expences</h2>
+</div>
+<div class="exp">
+    <h1>    view your expences   </h1>
+    <label for="per_page" style="color: white;">record:</label>
+    <select title="per_page" name="per_page" id="per_page">
+      <option value="2">2</option>
+      <option selected value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+    </select>
+    <table id="tab">
+        <tr>
+            <th style="text-align: center;">Discription</th>
+            <th style="text-align: center;">Category</th>
+            <th style="text-align: center;">Amount in Rs.</th>
+            <th style="text-align: center;">action</th>
+          </tr>
+        <tbody id="records">
+
+        </tbody>
+         
+    </table>
+    <div class="row">
+      <div class="column">
+          <div id="page-details"></div>
+      </div>
+      <div class="col">
+          <nav class="d-flex justify-content-center">
+              <ul class="pagination" id="pagination">
+               
+    
+              </ul>
+             
+            </nav>
+      </div>
+      </div>
+</div>
+<div class="ex">
+ 
+</div>
+
+
+
+<p id="ok"></p>
+
+
+<h2 style="text-align: center; margin-bottom: 30px;" id="report">
+    
+ <button onclick="report()">download report</button>
+</h2>
+
+
+
+
+
+
+
+    <div class="exp" id="showleader">
+     
+      <h1 id="leaderhead"></h1>
+  
+
+    <table id="leaderboard">
+        <tr>
+            <th style="text-align: center;">NAME</th>
+            <th style="text-align: center;">TOTAL EXPENCE</th> 
+          </tr>     
+    </table>
+</div>
+
+
+
+<h2 style="text-align: center; margin-bottom: 30px;">
+    <a id="logout" style="text-decoration: none; border: black solid; background-color: #9958;border-radius: 10px; padding: 5px; " href="/frontend/login.html ">logout</a>
+    
+</h2>
+
+
+</body>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const token=localStorage.getItem("token")
+async function addexp(e){
+  e.preventDefault();
+  const data={
+    amount:e.target.amount.value,
+    dis:e.target.discription.value,
+    cat:e.target.category.value,
+   
+  }
+  console.log(data)
+  axios.post("http://localhost:3000/frontend/display.html",data,{headers:{'Authorization':token}})
+  .then((res)=>{
+    console.log(res);
+    if(res.status===201){
+      console.log('ok')
+ 
+     window.location.href="http://localhost:3000/frontend/display.html"
+    }
+  })
+  .catch(err=>console.log(err));
+}
+
+
+//const exp=[];
+
+async function getdata(){
+  axios.get("http://localhost:3000/frontend/display",{headers:{'Authorization':token}})
+  .then(res=>{
+  //   res.data.forEach((ele,index)=>{
+  //   exp.push(ele)
+  // })
+    //console.log(res.data)
+
+  localStorage.setItem('data',JSON.stringify(res.data)) 
+  
+})
+
+}
+getdata()
+const b=[1,2,3,4,5,6]
+// const exp=[];
+// async function data(){
+//   const data=await localStorage.getItem('data')
+//   data.forEach((ele)=>{
+//     exp.push(ele)
+//   })
+// }
+// data()
+let current_page=1;
+  let record_per_page=3;
+  const exp=JSON.parse(localStorage.getItem('data'))
+ 
+  let total_page=Math.ceil(exp.length/record_per_page)
+console.log(total_page);
+//console.log(data)
+console.log("exp: ",exp)
+
+function printrecord(){
+  let i=1
+  
+  console.log(current_page)
+ 
+   let start=(current_page-1)*record_per_page;
+   console.log('start:',start)
+   let end=start+(record_per_page-1)
+   console.log('end:',end)
+   console.log('value=',exp.length%record_per_page)
+   if(exp.length>record_per_page){
+     
+     if(start===(total_page-1)*record_per_page){
+     end=exp.length-1
+     console.log('end:',end)
+    }else{
+     start=(current_page-1)*record_per_page;
+       end=start+(record_per_page-1)
+     
+    }
+   }else{
+    start=0;
+    end=exp.length-1
+   }
+   
+    let row='';
+    for(let t=start;t<=end;t++){
+    row+= `<tr id="${exp[t]._id}">
+            <td style="text-align: center;">${exp[t].discription}</td>
+          <td style="text-align: center;">${exp[t].category}</td>
+          <td style="text-align: center;">${exp[t].amount}</td>
+          <td style="text-align: center;"><a onclick="deleteit('${exp[t]._id}')" border="1px solid black" style="color:white; border:1px solid black; text-decoration: none; border-radius: 5px; background-color:red; padding: 5px;" href="javascript:void(0)">delete</></td>
+          </tr>
+          `
+i++
+    }
+    document.getElementById('records').innerHTML=`${row}`;
+    document.querySelectorAll('.dynamic-item').forEach(item=>{
+      item.classList.remove('active')
+    })
+    document.getElementById(`page${current_page}`).classList.add('active');
+    if(current_page==1){
+      document.getElementById('prevBtn').classList.add('disabled')
+    }else{
+      document.getElementById('prevBtn').classList.remove('disabled')
+    }
+    if(current_page==total_page){
+      document.getElementById('nextBtn').classList.add('disabled')
+    }else{
+      document.getElementById('nextBtn').classList.remove('disabled')
+    }
+
+}
+if(exp.length!=0){
+  generatePage()
+ printrecord()
+}
+
+ const tr=document.querySelectorAll('.records tr');
+ console.log('totle table rows are: ',tr)
+
+function generatePage(){
+  let prevBtn=`<li class="page-item " id="prevBtn">
+              <a class="page-link" onclick="prevBtn()" href="javascript:void(0)" tabindex="-1">Previous</a>
+            </li>`
+
+  let nextBtn=`<li class="page-item" id="nextBtn">
+              <a class="page-link" onclick='nextBtn()' href="javascript:void(0)">Next</a>
+            </li>`     
+  let buttons='';          
+  for(let i=1;i<=total_page;i++) {
+    if(i==1){
+    buttons+= `<li class="page-item dynamic-item active " id='page${i}'><a class="page-link" onclick="page(${i})" href="javascript:void(0)">${i}</a></li>`
+    }else{
+      buttons+=`<li class="page-item dynamic-item " id='page${i}'><a class="page-link" onclick='page(${i})' href="javascript:void(0)">${i}</a></li>`
+    }
+  }  
+  
+  document.getElementById('pagination').innerHTML=`${prevBtn} ${buttons} ${nextBtn}`
+}
+
+function nextBtn(){
+  current_page++;
+  printrecord()
+
+}
+function prevBtn(){
+  current_page--;
+  printrecord()
+
+}
+function page(page_no){
+  current_page=page_no
+  printrecord()
+}
+
+document.getElementById('per_page').addEventListener("change",function(e){
+  console.log(e.target.value)
+  record_per_page=parseInt(e.target.value);
+  console.log(record_per_page)
+  total_page=Math.ceil(exp.length/record_per_page)
+  current_page=1
+  generatePage()
+  printrecord()
+})
+
+  
+
+
+
+function deleteit(id){
+  axios.get(`http://localhost:3000/frontend/display/${id}`)
+  .then(res=>{
+    alert('exp has been deleted')
+    document.getElementById(id).remove();
+    console.log(res)
+  })
+}
+
+//payment
+document.getElementById(`premium`).onclick =async function(e){
+    e.preventDefault();
+    let response=await fetch('http://localhost:3000/payment',{
+        method:"POST",
+        headers:{'Authorization':token},
+        body:JSON.stringify({
+            amount:2500,
+        })
+    })
+    let order=await response.json();
+
+    //console.log(order)
+    console.log(order.order.id)
+    console.log(order.userId)
+
+    var options = {
+    "key": order.key_id, // Enter the Key ID generated from the Dashboard
+    "amount": order.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "order_id": order.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": `http://localhost:3000/payment/verify/${order.userId}`,
+   
+};
+var rzp1 = new Razorpay(options);
+
+
+    rzp1.open();
+}
+
+function getUserData(){
+  axios.get(`http://localhost:3000/frontend/user`,{headers:{'Authorization':token}})
+  .then((res)=>{
+    console.log(res.data.response[0].payment)
+    if(res.data.response[0].payment==='success'){
+      document.getElementById('premium').remove();
+      alert('you are premium member')
+      leaderboard()
+    }else{
+      document.getElementById('showleader').remove();
+      document.getElementById('report').remove()
+    }
+  })
+}
+getUserData()
+
+async function leaderboard(){
+  let j=1;
+  const response=await axios.get('http://localhost:3000/leaderboard');
+  for(let i of response.data.response){
+    console.log(i.id,i.name,i.total)
+  document.getElementById('leaderhead').innerHTML="leader board";
+  const table=document.getElementById('leaderboard');
+  const row=table.insertRow(j);
+  //row.id=i.id;
+  row.innerHTML=`<tr id="${i.id}">
+            <th style="text-align: center;">${i.name}</th>
+            <th style="text-align: center;">${i.total}</th> 
+          </tr>   `
+  }
+ 
+}
+
+async function download(){
+  const response=await axios.get('http://localhost:3000/download',{headers:{'Authorization':token}});
+  window.location.href=response.data;
+}
+
+const logout=document.getElementById('logout')
+logout.addEventListener("click",()=>{
+  localStorage.removeItem('data');
+})
+  </script>
+</html>
